@@ -15,11 +15,13 @@ def todos_handler():
 
     if request.method == 'POST':
         newTodo = request.form.to_dict()
+        newTodo['completed'] = False
         newTodo['id'] = int(time.time() * 1000)
         todos.append(newTodo)
 
         with open('todos.json', 'w') as file:
             file.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+        return Response(json.dumps(newTodo), mimetype='application/json')
 
     return Response(json.dumps(todos),
             mimetype='application/json',
