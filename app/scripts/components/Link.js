@@ -1,6 +1,6 @@
 //@flow
 
-import React, {propTypes} from 'react'
+import React, {PropTypes} from 'react'
 
 const Link = ({active, children, onClick}) => {
   if (active) {
