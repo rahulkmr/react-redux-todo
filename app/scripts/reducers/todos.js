@@ -1,4 +1,5 @@
-import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER} from '../actions'
+//@flow
+import {ADD_TODO, TOGGLE_TODO} from '../actions'
 
 const todo = (state, action) => {
   switch (action.type) {
