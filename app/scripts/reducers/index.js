@@ -13,7 +13,7 @@ const todos = (state = [], action) => {
             {
               id: action.id,
               text: action.text,
-              completed: false
+              completed: action.completed
             }
           ]
       case TOGGLE_TODO:
