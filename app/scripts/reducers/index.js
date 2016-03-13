@@ -1,6 +1,5 @@
 //@flow
 import {combineReducers} from 'redux'
-import visibilityFilter from './visibilityFilter'
 import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER} from '../actions'
 import {SHOW_ALL} from '../constants'
 
