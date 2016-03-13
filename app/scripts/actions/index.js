@@ -1,5 +1,6 @@
 //@flow
 import $ from 'jquery'
+import {todoApi} from '../constants'
 
 let nextTodoId = 0
 export const ADD_TODO = 'ADD_TODO'
@@ -7,7 +8,6 @@ export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const INITIALIZE = 'INITIALIZE'
 
-let todoApi = `http://localhost:9000/api/todos`
 
 export const startFetch = (store) => {
   $.ajax({
@@ -26,11 +26,12 @@ export const initialize = (data) => {
 }
 
 
-export const addTodo = (text) => {
+export const addTodo = (id, text, completed) => {
   return {
     type: ADD_TODO,
-    id: nextTodoId++,
-    text
+    id,
+    text,
+    completed
   }
 }
 
