@@ -1,0 +1,25 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "impliedStrict": true
+        }
+    },
+    "rules": {
+        "strict": 0,
+        "quotes": 0,
+        "camelcase": 0,
+        "no-underscore-dangle": 0
+    },
+    "plugins": [
+        "react"
+    ],
+    "env": {
+         "browser": true,
+         "node": true,
+         "jquery": true
+     }
+}
