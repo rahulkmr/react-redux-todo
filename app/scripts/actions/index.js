@@ -4,6 +4,24 @@ export const ADD_TODO = 'ADD_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 
+let todoApi = `http://localhost:9000/api/todos`
+
+export const startFetch = (store) => {
+  $.ajax({
+    url: todoApi,
+    dataType: 'json',
+    cache: false})
+    .then((data) => store.dispatch(initialize(data)))
+}
+
+
+export const initialize = (data) => {
+  return {
+    type: initialize,
+    data: data
+  }
+}
+
 
 export const addTodo = (text) => {
   return {
