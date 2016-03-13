@@ -24,8 +24,25 @@ def todos_handler():
         return Response(json.dumps(newTodo), mimetype='application/json')
 
     return Response(json.dumps(todos),
-            mimetype='application/json',
-            headers={'Cache-Control': 'no-cache', 'Access-Control-Allow-Origin': '*'})
+                    mimetype='application/json',
+                    headers={'Cache-Control': 'no-cache', 'Access-Control-Allow-Origin': '*'})
+
+
+@app.route('/api/todos/:id', methods=['GET', 'PUT'])
+def todo(id):
+    with open('todos.json', 'r') as file:
+        todos = json.loads(file.read())
+    todo = filter(lambda x: x['id'] == id)[0]
+    if request.method == 'PUT':
+        todo['completed'] = True
+        newTodos = []
+        for todo in todos:
+            if todo['id'] == id:
+                todo['completed'] = True
+            newTodos.append(todo)
+        with open('todos.json', 'w') as file:
+            file.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+    return Response(json.dumps(todo), mimetype='application/json')
 
 
 if __name__ == '__main__':
