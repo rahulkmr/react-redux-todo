@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
-import { todoApi } from '../constants'
+import { TODO_API } from '../constants'
 import $ from 'jquery'
 
 const postTodo = (dispatch, text) => {
   $.ajax({
-    url: todoApi,
+    url: TODO_API,
     dataType: 'json',
     data: {text: text},
     type: 'POST'})

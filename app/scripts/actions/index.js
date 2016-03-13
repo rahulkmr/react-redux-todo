@@ -1,6 +1,6 @@
 //@flow
 import $ from 'jquery'
-import {todoApi} from '../constants'
+import {TODO_API} from '../constants'
 
 let nextTodoId = 0
 export const ADD_TODO = 'ADD_TODO'
@@ -11,7 +11,7 @@ export const INITIALIZE = 'INITIALIZE'
 
 export const startFetch = (store) => {
   $.ajax({
-    url: todoApi,
+    url: TODO_API,
     dataType: 'json',
     cache: false})
     .then((data) => store.dispatch(initialize(data)))
