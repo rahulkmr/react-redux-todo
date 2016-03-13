@@ -1,10 +1,9 @@
 //@flow
-
 import React, {PropTypes} from 'react'
 
 const Link = ({active, children, onClick}) => {
   if (active) {
-    return <span>{children}</span>;
+    return <span>{children}</span>
   }
 
   return (
@@ -21,4 +20,4 @@ Link.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-export default Link;
+export default Link

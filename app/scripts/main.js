@@ -13,4 +13,4 @@ render(
     <TodoApp />
   </Provider>,
   document.getElementById('root')
-);
+)

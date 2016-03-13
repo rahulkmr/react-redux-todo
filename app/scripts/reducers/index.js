@@ -7,6 +7,6 @@ import visibilityFilter from './visibilityFilter'
 const todoReducers = combineReducers({
   todos,
   visibilityFilter
-});
+})
 
-export default todoReducers;
+export default todoReducers

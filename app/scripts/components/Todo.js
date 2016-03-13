@@ -1,5 +1,4 @@
 //@flow
-
 import React, {PropTypes} from 'react'
 
 const Todo = ({onClick, completed, text}) => (
@@ -7,13 +6,13 @@ const Todo = ({onClick, completed, text}) => (
     style={{textDecoration: completed ? 'line-through' : 'none'}}>
     {text}
   </li>
-);
+)
 
 Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
-};
+}
 
 const TodoList = ({todos, onTodoClick}) => (
   <ul>
@@ -24,7 +23,7 @@ const TodoList = ({todos, onTodoClick}) => (
       onClick={() => onTodoClick(todo.id)} 
       />)}
   </ul>
-);
+)
 
 
-export default TodoList;
+export default TodoList
