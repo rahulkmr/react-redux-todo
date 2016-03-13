@@ -1,10 +1,12 @@
 //@flow
 import {combineReducers} from 'redux'
-import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER} from '../actions'
+import {INITIALIZE, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER} from '../actions'
 import {SHOW_ALL} from '../constants'
 
 const todos = (state = [], action) => {
   switch (action.type) {
+      case INITIALIZE:
+          return action.data
       case ADD_TODO:
           return [
             ...state,
