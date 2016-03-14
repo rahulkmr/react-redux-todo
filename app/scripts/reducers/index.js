@@ -41,4 +41,6 @@ const todoReducers = combineReducers({
   visibilityFilter
 })
 
-export default todoReducers
+const reducers = [...todoReducers]
+
+export default reducers
