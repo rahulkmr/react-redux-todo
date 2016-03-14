@@ -28,27 +28,29 @@ class TodoList extends Component {
   constructor({todos, dispatch}) {
     super({todos})
     this.dispatch = dispatch
-    this.onTodoClick = (id) => {
-      $.ajax({
-        url: `${TODO_API}/${id}`,
-        type: 'PUT',
-        dataType: 'json'
-      })
-      .then((data) => dispatch(toggleTodo(id)))
-    }
   }
 
   render() {
+    console.log(this.props)
     return (
       <ul className="mdl-list">
         {this.props.todos.map(todo =>
         <Todo
           key={todo.id}
           {...todo}
-          onClick={() => this.onTodoClick(todo.id)}
+          onClick={() => this._handleClick(todo.id)}
         />)}
         </ul>
     )
+  }
+
+  _handleClick(id) {
+    $.ajax({
+      url: `${TODO_API}/${id}`,
+      type: 'PUT',
+      dataType: 'json'
+    })
+    .then((data) => this.dispatch(toggleTodo(id)))
   }
 
   static getVisibileTodos(todos, filter) {
