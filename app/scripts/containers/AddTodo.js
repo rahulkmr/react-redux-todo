@@ -30,7 +30,9 @@ let AddTodo = ({ dispatch }) => {
         <input ref={node => {
           input = node
         }} />
-        <button type="submit">
+        <button
+          className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+          type="submit">
           Add Todo
         </button>
       </form>

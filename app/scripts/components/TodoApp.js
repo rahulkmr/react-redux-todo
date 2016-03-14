@@ -8,10 +8,12 @@ import { fetchTodos } from '../actions'
 class TodoApp extends Component {
   render() {
     return (
-      <div>
-        <AddTodo />
-        <VisibleTodoList />
-        <Footer />
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
+          <AddTodo />
+          <VisibleTodoList />
+          <Footer />
+        </div>
       </div>
     )
   }

@@ -2,9 +2,11 @@
 import React, {PropTypes} from 'react'
 
 const Todo = ({onClick, completed, text}) => (
-  <li onClick={onClick}
+  <li className="mdl-list__item" onClick={onClick}
     style={{textDecoration: completed ? 'line-through' : 'none'}}>
-    {text}
+    <span className="mdl-list__item_primary_content">
+      {text}
+    </span>
   </li>
 )
 
@@ -15,7 +17,7 @@ Todo.propTypes = {
 }
 
 const TodoList = ({todos, onTodoClick}) => (
-  <ul>
+  <ul className="mdl-list">
     {todos.map(todo => 
     <Todo 
       key={todo.id} 
