@@ -1,9 +1,10 @@
 //@flow
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import todoReducers from '../reducers'
-import {startFetch} from '../actions'
+import {fetchTodos} from '../actions'
+import thunkMiddleware from 'redux-thunk'
 
-const store = createStore(todoReducers)
-startFetch(store)
+const store = createStore(todoReducers,
+                          applyMiddleware(thunkMiddleware))
 
 export default store
