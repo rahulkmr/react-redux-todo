@@ -8,41 +8,50 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
-@app.route('/api/todos', methods=['GET', 'POST'])
-def todos_handler():
-    with open('todos.json', 'r') as file:
-        todos = json.loads(file.read())
-
-    if request.method == 'POST':
-        newTodo = request.form.to_dict()
-        newTodo['completed'] = False
-        newTodo['id'] = int(time.time() * 1000)
-        todos.append(newTodo)
-
-        with open('todos.json', 'w') as file:
-            file.write(json.dumps(todos, indent=4, separators=(',', ': ')))
-        return Response(json.dumps(newTodo), mimetype='application/json')
+@app.route('/api/todos', methods=['GET'])
+def todos_index():
+    with open('todos.json', 'r') as db:
+        todos = json.loads(db.read())
 
     return Response(json.dumps(todos),
-                    mimetype='application/json',
-                    headers={'Cache-Control': 'no-cache', 'Access-Control-Allow-Origin': '*'})
+                    mimetype='application/json')
 
 
-@app.route('/api/todos/:id', methods=['GET', 'PUT'])
-def todo(id):
-    with open('todos.json', 'r') as file:
-        todos = json.loads(file.read())
-    todo = filter(lambda x: x['id'] == id)[0]
-    if request.method == 'PUT':
-        todo['completed'] = True
-        newTodos = []
-        for todo in todos:
-            if todo['id'] == id:
-                todo['completed'] = True
-            newTodos.append(todo)
-        with open('todos.json', 'w') as file:
-            file.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+@app.route('/api/todos', methods=['POST'])
+def todos_create():
+    with open('todos.json', 'r') as db:
+        todos = json.loads(db.read())
+    newTodo = request.form.to_dict()
+    newTodo['completed'] = False
+    newTodo['id'] = int(time.time() * 1000)
+
+    with open('todos.json', 'w') as db:
+        todos.append(newTodo)
+        db.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+    return Response(json.dumps(newTodo), mimetype='application/json')
+
+
+@app.route('/api/todos/:id', methods=['GET'])
+def todos_show(id):
+    with open('todos.json', 'r') as db:
+        todos = json.loads(db.read())
+    todo = filter(lambda x: x['id'] == id, todos)[0]
     return Response(json.dumps(todo), mimetype='application/json')
+
+
+@app.route('/api/todos/:id', methods=['PUT'])
+def todos_update(id):
+    with open('todos.json', 'r') as db:
+        todos = json.loads(db.read())
+    newTodos = []
+    for todo in todos:
+        if todo['id'] == id:
+            todo['completed'] = True
+            res = todo
+        newTodos.append(todo)
+    with open('todos.json', 'w') as db:
+        db.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+    return Response(json.dumps(res), mimetype='application/json')
 
 
 if __name__ == '__main__':
