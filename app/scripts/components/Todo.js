@@ -27,11 +27,11 @@ Todo.propTypes = {
 class TodoList extends Component {
   constructor({todos, dispatch}) {
     super({todos})
+    fetchTodos(dispatch)
     this.dispatch = dispatch
   }
 
   render() {
-    console.log(this.props)
     return (
       <ul className="mdl-list">
         {this.props.todos.map(todo =>
@@ -65,6 +65,7 @@ class TodoList extends Component {
   }
 
 }
+
 
 const mapStateToProps = (state) => {
   return {
