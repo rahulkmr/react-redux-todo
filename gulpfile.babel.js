@@ -121,7 +121,7 @@ gulp.task('scripts', () => {
       //'./app/scripts/**/*.js'
       './app/scripts/index.js'
     ])
-      .pipe($.newer('.tmp/scripts'))
+      //.pipe($.newer('.tmp/scripts'))
       .pipe(through2.obj(browserified))
       .pipe($.sourcemaps.init({loadMaps: true}))
       .pipe($.sourcemaps.write())
