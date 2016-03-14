@@ -1,7 +1,6 @@
 //@flow
 import {createStore, applyMiddleware, combineReducers} from 'redux'
 import reducers from '../reducers'
-import {fetchTodos} from '../actions'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { browserHistory } from 'react-router'
