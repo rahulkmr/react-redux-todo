@@ -31,21 +31,21 @@ def todos_create():
     return Response(json.dumps(newTodo), mimetype='application/json')
 
 
-@app.route('/api/todos/:id', methods=['GET'])
-def todos_show(id):
+@app.route('/api/todos/<todo_id>', methods=['GET'])
+def todos_show(todo_id):
     with open('todos.json', 'r') as db:
         todos = json.loads(db.read())
-    todo = filter(lambda x: x['id'] == id, todos)[0]
+    todo = filter(lambda x: x['id'] == int(todo_id), todos)[0]
     return Response(json.dumps(todo), mimetype='application/json')
 
 
-@app.route('/api/todos/:id', methods=['PUT'])
-def todos_update(id):
+@app.route('/api/todos/<todo_id>', methods=['PUT'])
+def todos_update(todo_id):
     with open('todos.json', 'r') as db:
         todos = json.loads(db.read())
     newTodos = []
     for todo in todos:
-        if todo['id'] == id:
+        if todo['id'] == int(todo_id):
             todo['completed'] = True
             res = todo
         newTodos.append(todo)
