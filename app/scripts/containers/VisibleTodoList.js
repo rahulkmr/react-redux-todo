@@ -2,7 +2,8 @@
 import {connect} from 'react-redux'
 import {toggleTodo} from '../actions'
 import TodoList from '../components/Todo'
-import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE} from '../constants'
+import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../constants'
+import $ from 'jquery'
 
 const getVisibileTodos = (todos, filter) => {
   switch (filter) {
@@ -24,7 +25,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTodoClick: (id) => dispatch(toggleTodo(id))
+    onTodoClick: (id) => {
+      $.ajax({
+        url: `${TODO_API}/${id}`,
+        type: 'PUT',
+        dataType: 'json'
+      })
+      .then((data) => dispatch(toggleTodo(id)))
+    }
   }
 }
 
