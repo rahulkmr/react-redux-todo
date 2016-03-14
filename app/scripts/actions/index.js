@@ -9,12 +9,13 @@ export const INITIALIZE = 'INITIALIZE'
 
 
 export const fetchTodos = () => {
-  (dispatch) =>
+  return (dispatch) => {
     $.ajax({
       url: TODO_API,
       dataType: 'json',
       cache: false})
       .then((data) => dispatch(initialize(data)))
+  }
 }
 
 
