@@ -36,11 +36,9 @@ const visibilityFilter = (state=SHOW_ALL, action) => {
   }
 }
 
-const todoReducers = combineReducers({
+const reducers = combineReducers({
   todos,
   visibilityFilter
 })
-
-const reducers = [...todoReducers]
 
 export default reducers

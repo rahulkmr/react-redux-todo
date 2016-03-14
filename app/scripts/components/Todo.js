@@ -1,6 +1,7 @@
 //@flow
-import React, {PropTypes} from 'react'
+import React, {PropTypes, Component} from 'react'
 import {fetchTodos} from '../actions'
+import store from '../store'
 
 const Todo = ({onClick, completed, text}) => (
   <li className="mdl-list__item" onClick={onClick}
@@ -19,8 +20,9 @@ Todo.propTypes = {
 
 
 class TodoList extends Component {
-  constructor({todos, onTodoCick, dispatch}) {
-    super(todos, onTodoClick, dispatch)
+  constructor({todos, onTodoClick}) {
+    super({todos, onTodoClick})
+    store.dispatch(fetchTodos())
   }
 
   render() {
@@ -34,10 +36,6 @@ class TodoList extends Component {
         />)}
         </ul>
     )
-  }
-
-  componentWillMount() {
-    fetchTodos(this.props.dispatch)
   }
 }
 
