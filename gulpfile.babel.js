@@ -30,6 +30,8 @@ import del from 'del';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import swPrecache from 'sw-precache';
+import browserify from 'browserify'
+import through2 from 'through2'
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
@@ -103,19 +105,24 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
+gulp.task('scripts', () => {
+    let browserified = (file, enc, next) => {
+      browserify(file.path, {debug: true, transform: ['babelify']})
+      .bundle((err, res) => {
+        file.contents = res
+        next(null, file)
+      })
+    }
     gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './app/scripts/index.js'
-      // Other scripts
+      './app/scripts/**/*.js'
+      //'./app/scripts/index.js'
     ])
       .pipe($.newer('.tmp/scripts'))
-      .pipe($.sourcemaps.init())
-      .pipe($.browserify(
-        { debug: !gulp.env.production, transform: ['babelify']}
-      ))
+      .pipe(through2.obj(browserified))
+      .pipe($.sourcemaps.init({loadMaps: true}))
       .pipe($.sourcemaps.write())
       .pipe(gulp.dest('.tmp/scripts'))
       .pipe($.concat('build.min.js'))
@@ -124,7 +131,7 @@ gulp.task('scripts', () =>
       .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest('dist/scripts'))
-);
+});
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
