@@ -2,6 +2,11 @@
 import React, {PropTypes, Component} from 'react'
 import {fetchTodos} from '../actions'
 import store from '../store'
+import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../constants'
+import $ from 'jquery'
+import {toggleTodo} from '../actions'
+import {connect} from 'react-redux'
+
 
 const Todo = ({onClick, completed, text}) => (
   <li className="mdl-list__item" onClick={onClick}
@@ -20,9 +25,17 @@ Todo.propTypes = {
 
 
 class TodoList extends Component {
-  constructor({todos, onTodoClick}) {
-    super({todos, onTodoClick})
-    store.dispatch(fetchTodos())
+  constructor({todos, dispatch}) {
+    super({todos})
+    this.dispatch = dispatch
+    this.onTodoClick = (id) => {
+      $.ajax({
+        url: `${TODO_API}/${id}`,
+        type: 'PUT',
+        dataType: 'json'
+      })
+      .then((data) => dispatch(toggleTodo(id)))
+    }
   }
 
   render() {
@@ -32,11 +45,31 @@ class TodoList extends Component {
         <Todo
           key={todo.id}
           {...todo}
-          onClick={() => this.props.onTodoClick(todo.id)}
+          onClick={() => this.onTodoClick(todo.id)}
         />)}
         </ul>
     )
   }
+
+  static getVisibileTodos(todos, filter) {
+    switch (filter) {
+        case SHOW_ALL:
+            return todos
+        case SHOW_COMPLETED:
+            return todos.filter(t => t.completed)
+        case SHOW_ACTIVE:
+            return todos.filter(t => !t.completed)
+    }
+  }
+
 }
+
+const mapStateToProps = (state) => {
+  return {
+    todos: TodoList.getVisibileTodos(state.todos, state.visibilityFilter)
+  }
+}
+
+TodoList = connect(mapStateToProps)(TodoList)
 
 export default TodoList

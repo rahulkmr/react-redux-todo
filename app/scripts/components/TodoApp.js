@@ -1,7 +1,7 @@
 //@flow
 import React, { Component } from 'react'
 import Footer from './Footer'
-import VisibleTodoList from '../containers/VisibleTodoList'
+import TodoList from '../components/Todo'
 import AddTodo from '../containers/AddTodo'
 
 class TodoApp extends Component {
@@ -10,7 +10,7 @@ class TodoApp extends Component {
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--4-col mdl-cell--4-offset">
           <AddTodo />
-          <VisibleTodoList />
+          <TodoList />
           <Footer />
         </div>
       </div>
