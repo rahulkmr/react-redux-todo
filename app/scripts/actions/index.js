@@ -8,14 +8,12 @@ export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const INITIALIZE = 'INITIALIZE'
 
 
-export const fetchTodos = () => {
-  return (dispatch) => {
-    $.ajax({
-      url: TODO_API,
-      dataType: 'json',
-      cache: false})
-      .then((data) => dispatch(initialize(data)))
-  }
+export const fetchTodos = (dispatch) => {
+  $.ajax({
+    url: TODO_API,
+    dataType: 'json',
+    cache: false})
+    .then((data) => dispatch(initialize(data)))
 }
 
 
