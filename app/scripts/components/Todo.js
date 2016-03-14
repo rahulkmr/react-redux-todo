@@ -1,5 +1,6 @@
 //@flow
 import React, {PropTypes} from 'react'
+import {fetchTodos} from '../actions'
 
 const Todo = ({onClick, completed, text}) => (
   <li className="mdl-list__item" onClick={onClick}
@@ -16,16 +17,28 @@ Todo.propTypes = {
   text: PropTypes.string.isRequired
 }
 
-const TodoList = ({todos, onTodoClick}) => (
-  <ul className="mdl-list">
-    {todos.map(todo => 
-    <Todo 
-      key={todo.id} 
-      {...todo} 
-      onClick={() => onTodoClick(todo.id)} 
-      />)}
-  </ul>
-)
 
+class TodoList extends Component {
+  constructor({todos, onTodoCick, dispatch}) {
+    super(todos, onTodoClick, dispatch)
+  }
+
+  render() {
+    return (
+      <ul className="mdl-list">
+        {this.props.todos.map(todo =>
+        <Todo
+          key={todo.id}
+          {...todo}
+          onClick={() => this.props.onTodoClick(todo.id)}
+        />)}
+        </ul>
+    )
+  }
+
+  componentWillMount() {
+    fetchTodos(this.props.dispatch)
+  }
+}
 
 export default TodoList
