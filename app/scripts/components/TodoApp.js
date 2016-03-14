@@ -15,10 +15,6 @@ class TodoApp extends Component {
       </div>
     )
   }
-
-  componentWillMount() {
-    fetchTodos()
-  }
 }
 
 export default TodoApp
