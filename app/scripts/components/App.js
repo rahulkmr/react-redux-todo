@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 class App extends Component {
   render() {
     return (
+      <div>
         <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
@@ -28,6 +29,7 @@ class App extends Component {
             </div>
             </main>
         </div>
+      </div>
     )
   }
 }
