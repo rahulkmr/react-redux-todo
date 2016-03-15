@@ -10,7 +10,6 @@ class App extends Component {
             <div className="mdl-layout__header-row">
                 <span className="mdl-layout-title">TODO</span>
                 <div className="mdl-layout-spacer"></div>
-                <!-- Navigation. We hide it in small screens. -->
                 <nav className="mdl-navigation mdl-layout--large-screen-only">
                 <Link className="mdl-navigation__link" to="/about">About</Link>
                 </nav>
@@ -32,3 +31,5 @@ class App extends Component {
     )
   }
 }
+
+export default App
