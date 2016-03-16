@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterLink from '../containers/FilterLink'
+import FilterLink from '../components/FilterLink'
 import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE} from '../constants'
 
 const Footer = () => (
