@@ -24,17 +24,21 @@
 // You can read more about the new JavaScript features here:
 // https://babeljs.io/docs/learn-es2015/
 
-import path from 'path';
-import gulp from 'gulp';
-import del from 'del';
-import runSequence from 'run-sequence';
-import browserSync from 'browser-sync';
-import swPrecache from 'sw-precache';
+import path from 'path'
+import gulp from 'gulp'
+import gutil from 'gulp-util'
+import del from 'del'
+import runSequence from 'run-sequence'
+import browserSync from 'browser-sync'
+import swPrecache from 'sw-precache'
 import browserify from 'browserify'
+import watchify from 'watchify'
 import through2 from 'through2'
-import gulpLoadPlugins from 'gulp-load-plugins';
-import {output as pagespeed} from 'psi';
-import pkg from './package.json';
+import gulpLoadPlugins from 'gulp-load-plugins'
+import source from 'vinyl-source-stream'
+import buffer from 'vinyl-buffer'
+import {output as pagespeed} from 'psi'
+import pkg from './package.json'
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -106,23 +110,16 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
+
 gulp.task('scripts', () => {
-    let browserified = (file, enc, next) => {
-      browserify(file.path, {debug: true, transform: ['babelify']})
-      .bundle((err, res) => {
-        file.contents = res
-        next(null, file)
-      })
-    }
-    gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
-      //'./app/scripts/**/*.js'
-      './app/scripts/index.js'
-    ])
-      //.pipe($.newer('.tmp/scripts'))
-      .pipe(through2.obj(browserified))
+    const b = browserify({
+      entries: ['./app/scripts/index.js'],
+      transform: ['babelify']
+    })
+    b.bundle()
+      .pipe(source('bundle.js'))
+      .pipe(buffer())
+      .on('error', gutil.log)
       .pipe($.sourcemaps.init({loadMaps: true}))
       .pipe($.sourcemaps.write())
       .pipe(gulp.dest('.tmp/scripts'))
