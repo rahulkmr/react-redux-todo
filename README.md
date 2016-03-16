@@ -7,7 +7,8 @@ Sample application for react and redux. This demonstrates:
 * Gulp for streaming build pipelines
 
 That's the major portion of the application. There is lot of other stuff viz. babel configuration, eslint configuration, tern configuration, flow configuration which can be used as a template for react-redux applications. There aren't any tests but one to demonstrate writing tests using `expect` and running it using `mocha`
-This can be easily refactored into a `yeoman` generator.
+
+This whole structure can be easily refactored into a `yeoman` generator. For now, I just clone this repository and clean it up for my projects
 
 
 ### Running the frontend server
