@@ -1,10 +1,10 @@
 //@flow
 import React, {PropTypes, Component} from 'react'
-import {fetchTodos} from '../actions'
-import store from '../store'
-import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../constants'
+import {fetchTodos} from '../../actions'
+import store from '../../store'
+import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
-import {toggleTodo} from '../actions'
+import {toggleTodo} from '../../actions'
 import {connect} from 'react-redux'
 
 

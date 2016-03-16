@@ -1,8 +1,8 @@
 //@flow
 import React, { Component } from 'react'
 import Footer from './Footer'
-import TodoList from '../components/Todo'
-import AddTodo from '../containers/AddTodo'
+import TodoList from './Todo'
+import AddTodo from './AddTodo'
 
 class TodoApp extends Component {
   render() {
