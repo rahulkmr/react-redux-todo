@@ -6,7 +6,7 @@ import App from './components/App'
 import TodoApp from './components/todo'
 import AboutApp from './components/AboutApp'
 import store from './store'
-import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 
 render(
   <Provider store={store}>
