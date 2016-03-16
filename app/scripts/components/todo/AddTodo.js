@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions'
-import { TODO_API } from '../constants'
+import { addTodo } from '../../actions'
+import { TODO_API } from '../../constants'
 import $ from 'jquery'
 
 const postTodo = (dispatch, text) => {

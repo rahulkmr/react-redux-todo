@@ -1,6 +1,6 @@
 //@flow
 import React, {PropTypes, Component} from 'react'
-import {setVisibilityFilter} from '../actions'
+import {setVisibilityFilter} from '../../actions'
 import {connect} from 'react-redux'
 
 class FilterLink extends Component {
