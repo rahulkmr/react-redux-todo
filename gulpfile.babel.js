@@ -111,24 +111,32 @@ gulp.task('styles', () => {
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 
+const b = browserify({
+  entries: ['./app/scripts/index.js'],
+  cache: {},
+  packageCache: {},
+  plugin: [watchify],
+  transform: ['babelify']
+})
+
+b.on('update', () => runSequence('lint', 'scripts', reload))
+
 gulp.task('scripts', () => {
-    const b = browserify({
-      entries: ['./app/scripts/index.js'],
-      transform: ['babelify']
-    })
-    b.bundle()
-      .pipe(source('bundle.js'))
-      .pipe(buffer())
-      .on('error', gutil.log)
-      .pipe($.sourcemaps.init({loadMaps: true}))
-      .pipe($.sourcemaps.write())
-      .pipe(gulp.dest('.tmp/scripts'))
-      .pipe($.concat('build.min.js'))
-      .pipe($.uglify({preserveComments: 'some'}))
-      // Output files
-      .pipe($.size({title: 'scripts'}))
-      .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('dist/scripts'))
+  b.bundle()
+  .on('log', gutil.log)
+  .on('error', (err) => gutil.log(err))
+  //.on('error', (err) => gutil.log(err))
+  .pipe(source('bundle.js'))
+  .pipe(buffer())
+  .pipe($.sourcemaps.init({loadMaps: true}))
+  .pipe($.sourcemaps.write())
+  .pipe(gulp.dest('.tmp/scripts'))
+  .pipe($.concat('build.min.js'))
+  .pipe($.uglify({preserveComments: 'some'}))
+  // Output files
+  .pipe($.size({title: 'scripts'}))
+  .pipe($.sourcemaps.write('.'))
+  .pipe(gulp.dest('dist/scripts'))
 });
 
 // Scan your HTML for assets & optimize them
@@ -186,7 +194,6 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts']);
   gulp.watch(['app/images/**/*'], reload);
 });
 
