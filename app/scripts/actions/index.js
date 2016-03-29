@@ -70,6 +70,7 @@ export const cancelEdit = (id) => {
 export const updateTodo = (id, text, completed) => {
   return {
     type: UPDATE_TODO,
+    id,
     text,
     completed
   }
