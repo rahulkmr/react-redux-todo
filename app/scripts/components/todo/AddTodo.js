@@ -1,16 +1,18 @@
 import React from 'react'
+import request from 'superagent'
 import { connect } from 'react-redux'
 import { addTodo } from '../../actions'
 import { TODO_API } from '../../constants'
 import $ from 'jquery'
 
 const postTodo = (dispatch, text) => {
-  $.ajax({
-    url: TODO_API,
-    dataType: 'json',
-    data: {text: text},
-    type: 'POST'})
-    .then((data) => dispatch(addTodo(data.id, data.text, data.completed)))
+  let data = {text: text}
+  request.post(TODO_API)
+  .send(data)
+  .end((err, res) => {
+    let data = res.body
+    dispatch(addTodo(data.id, data.text, data.completed))
+  })
 }
 
 

@@ -1,4 +1,5 @@
 //@flow
+import request from 'superagent'
 import React, {PropTypes, Component} from 'react'
 import {fetchTodos} from '../../actions'
 import store from '../../store'
@@ -45,12 +46,8 @@ class TodoList extends Component {
   }
 
   _handleClick(id) {
-    $.ajax({
-      url: `${TODO_API}/${id}`,
-      type: 'PUT',
-      dataType: 'json'
-    })
-    .then((data) => this.dispatch(toggleTodo(id)))
+    request.put(`${TODO_API}/${id}`)
+    .end((err, res) => this.dispatch(toggleTodo(id)))
   }
 
   static getVisibileTodos(todos, filter) {

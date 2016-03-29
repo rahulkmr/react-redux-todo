@@ -1,5 +1,5 @@
 //@flow
-import $ from 'jquery'
+import request from 'superagent'
 import {TODO_API} from '../constants'
 
 export const ADD_TODO = 'ADD_TODO'
@@ -9,11 +9,8 @@ export const INITIALIZE = 'INITIALIZE'
 
 
 export const fetchTodos = (dispatch) => {
-  $.ajax({
-    url: TODO_API,
-    dataType: 'json',
-    cache: false})
-    .then((data) => dispatch(initialize(data)))
+  request.get(TODO_API)
+  .end((err, res) => dispatch(initialize(res.body)))
 }
 
 
