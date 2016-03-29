@@ -1,7 +1,8 @@
 import json
 import os
 import time
-from flask import Flask, Response, request
+import httplib
+from flask import Flask, Response, request, make_response
 from flask.ext.cors import CORS
 
 app = Flask(__name__)
@@ -37,6 +38,16 @@ def todos_show(todo_id):
         todos = json.loads(db.read())
     todo = filter(lambda x: x['id'] == int(todo_id), todos)[0]
     return Response(json.dumps(todo), mimetype='application/json')
+
+
+@app.route('/api/todos/<todo_id>', methods=['DELETE'])
+def todos_delete(todo_id):
+    with open('todos.json', 'r') as db:
+        todos = json.loads(db.read())
+    todos = filter(lambda x: x['id'] == int(todo_id), todos)
+    with open('todos.json', 'w') as db:
+        db.write(json.dumps(todos, indent=4, separators=(',', ': ')))
+    return make_response('', httplib.NO_CONTENT)
 
 
 @app.route('/api/todos/<todo_id>', methods=['PUT'])
