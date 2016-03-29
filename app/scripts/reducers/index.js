@@ -1,6 +1,7 @@
 //@flow
 import {combineReducers} from 'redux'
-import {INITIALIZE, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, REMOVE_TODO} from '../actions'
+import {INITIALIZE, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER,
+  REMOVE_TODO, EDIT_TODO, CANCEL_TODO} from '../actions'
 import {SHOW_ALL} from '../constants'
 
 const todos = (state = [], action) => {
@@ -24,6 +25,18 @@ const todos = (state = [], action) => {
           })
       case REMOVE_TODO:
           return state.filter(t => t.id !== action.id)
+      case EDIT_TODO:
+          return state.map(t => {
+            if (t.id !== action.id)
+              return t
+            return {...t, edit: true}
+          })
+      case CANCEL_TODO:
+          return state.map(t => {
+            if (t.id !== action.id)
+              return t
+            return {...t, edit: false}
+          })
       default:
           return state
   }
