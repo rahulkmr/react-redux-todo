@@ -67,7 +67,7 @@ export const editTodo = (id) => {
 }
 
 
-export const cancelTodo = (id) => {
+export const cancelEdit = (id) => {
   return {
     type: CANCEL_TODO,
     id
