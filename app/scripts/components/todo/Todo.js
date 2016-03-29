@@ -7,6 +7,7 @@ import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
 import {toggleTodo, removeTodo, editTodo, cancelEdit} from '../../actions'
 import {connect} from 'react-redux'
+import { FloatingLabelTextBox } from '../Common'
 
 
 class FabButton extends Component {
@@ -39,20 +40,19 @@ let EditTodo = ({ id, text, completed, dispatch }) => {
       input.value = ''
     }}>
       <div className="mdl-grid">
-        <div className="mdl-cell mdl-cell--2-col mdl-cell--4-offset">
-          <FloatingLabelTextBox textRef={node => { input = node }}
-            defaultValue={text} label="Todo" />
+        <div className="mdl-cell mdl-cell--4-col mdl-cell--3-offset">
+          <input className="input" ref={node => { input = node }} defaultValue={text} />
         </div>
-        <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
+        <div className="mdl-cell mdl-cell--1-col">
           <button
             className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
             type="submit">
             Add
           </button>
         </div>
-        <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
+        <div className="mdl-cell mdl-cell--1-col">
           <button
-            className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+            className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--accent"
             onClick={(evt) => dispatch(cancelEdit(id))}
             type="reset">
             Reset
@@ -64,21 +64,30 @@ let EditTodo = ({ id, text, completed, dispatch }) => {
 }
 
 
-const Todo = ({id, completed, text, onCheckClick, onEditClick, onDeleteClick}) => (
-  <div className="mdl-grid">
-    <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
-      <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
-        {text}
-      </span>
-    </div>
-    <FabButton onClick={onCheckClick} id={`check-${id}`} icon="check_circle"
-      tooltip="Toggle Complete Status" />
-    <FabButton onClick={onEditClick} id={`edit-${id}`} icon="mode_edit"
+const Todo = ({id, completed, text, edit, dispatch, onCheckClick, onEditClick, onDeleteClick}) => {
+  if (edit) {
+    return <EditTodo id={id} completed={completed} text={text} dispatch={dispatch} />
+  } else {
+    const editComponent = completed && <span></span> ||
+      <FabButton onClick={onEditClick} id={`edit-${id}`} icon="mode_edit"
       tooltip="Edit Todo" />
-    <FabButton onClick={onDeleteClick} id={`delete-${id}`} icon="delete_forever"
+
+    return (
+      <div className="mdl-grid">
+      <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
+        <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
+          {text}
+        </span>
+      </div>
+      <FabButton onClick={onCheckClick} id={`check-${id}`} icon="check_circle"
+      tooltip="Toggle Complete Status" />
+      {editComponent}
+      <FabButton onClick={onDeleteClick} id={`delete-${id}`} icon="delete_forever"
       tooltip="Delete Todo" />
-  </div>
-)
+      </div>
+    )
+  }
+}
 
 
 Todo.propTypes = {
@@ -102,14 +111,19 @@ class TodoList extends Component {
         <Todo
           key={todo.id}
           {...todo}
-          onCheckClick={() => this._handleCheckClick(todo.id)}
-          onDeleteClick={() => this._handleDeleteClick(todo.id)} />)}
+          dispatch={this.props.dispatch}
+          onCheckClick={() => this._handleCheckClick(todo.id, !todo.completed)}
+          onDeleteClick={() => this._handleDeleteClick(todo.id)} 
+          onEditClick={() => this._handleEditClick(todo.id)}
+          />)}
       </div>
     )
   }
 
-  _handleCheckClick(id) {
+  _handleCheckClick(id, completed) {
+    const data = {completed: completed}
     request.put(`${TODO_API}/${id}`)
+    .send(data)
     .end((err, res) => this.dispatch(toggleTodo(id)))
   }
 
