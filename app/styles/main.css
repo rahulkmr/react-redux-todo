@@ -2,3 +2,10 @@
     max-width: 1140px;
     margin: 0 auto;
 }
+#title {
+    color: white;
+    text-decoration: none;
+}
+.current-link {
+    color: #36454f !important;
+}
