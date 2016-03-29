@@ -5,7 +5,7 @@ import {fetchTodos} from '../../actions'
 import store from '../../store'
 import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
-import {toggleTodo} from '../../actions'
+import {toggleTodo, removeTodo} from '../../actions'
 import {connect} from 'react-redux'
 
 
@@ -27,25 +27,25 @@ class FabButton extends Component {
 }
 
 
-const Todo = ({onClick, id, completed, text}) => (
+const Todo = ({id, completed, text, onCheckClick, onDeleteClick}) => (
   <div className="mdl-grid">
     <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
       <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
         {text}
       </span>
     </div>
-    <FabButton onClick={onClick} id={`check-${id}`} icon="check_circle"
+    <FabButton onClick={onCheckClick} id={`check-${id}`} icon="check_circle"
       tooltip="Toggle Complete Status" />
     <FabButton id={`edit-${id}`} icon="mode_edit"
       tooltip="Edit Todo" />
-    <FabButton id={`delete-${id}`} icon="delete_forever"
+    <FabButton onClick={onDeleteClick} id={`delete-${id}`} icon="delete_forever"
       tooltip="Delete Todo" />
   </div>
 )
 
 
 Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onCheckClick: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
 }
@@ -65,14 +65,19 @@ class TodoList extends Component {
         <Todo
           key={todo.id}
           {...todo}
-          onClick={() => this._handleClick(todo.id)} />)}
+          onCheckClick={() => this._handleClick(todo.id)} />)}
       </div>
     )
   }
 
-  _handleClick(id) {
+  _handleCheckClick(id) {
     request.put(`${TODO_API}/${id}`)
     .end((err, res) => this.dispatch(toggleTodo(id)))
+  }
+
+  _handleDeleteClick(id) {
+    request.delete(`${TODO_API}/${id}`)
+    .end((err, res) => this.dispatch(removeTodo(id)))
   }
 
   static getVisibileTodos(todos, filter) {
