@@ -1,6 +1,6 @@
 //@flow
 import {combineReducers} from 'redux'
-import {INITIALIZE, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER} from '../actions'
+import {INITIALIZE, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, REMOVE_TODO} from '../actions'
 import {SHOW_ALL} from '../constants'
 
 const todos = (state = [], action) => {
@@ -22,6 +22,8 @@ const todos = (state = [], action) => {
               return t
             return Object.assign({}, t, {completed: !t.completed})
           })
+      case REMOVE_TODO:
+          return state.filter(t => t.id !== action.id)
       default:
           return state
   }
