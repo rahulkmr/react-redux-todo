@@ -17,8 +17,6 @@ const postTodo = (dispatch, text) => {
 }
 
 
-
-
 let AddTodo = ({ dispatch }) => {
   let input
 
