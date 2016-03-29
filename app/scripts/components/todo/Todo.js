@@ -5,7 +5,7 @@ import {fetchTodos} from '../../actions'
 import store from '../../store'
 import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
-import {toggleTodo, removeTodo} from '../../actions'
+import {toggleTodo, removeTodo, editTodo} from '../../actions'
 import {connect} from 'react-redux'
 
 
@@ -27,7 +27,7 @@ class FabButton extends Component {
 }
 
 
-const Todo = ({id, completed, text, onCheckClick, onDeleteClick}) => (
+const Todo = ({id, completed, text, onCheckClick, onEditClick, onDeleteClick}) => (
   <div className="mdl-grid">
     <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
       <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
@@ -36,7 +36,7 @@ const Todo = ({id, completed, text, onCheckClick, onDeleteClick}) => (
     </div>
     <FabButton onClick={onCheckClick} id={`check-${id}`} icon="check_circle"
       tooltip="Toggle Complete Status" />
-    <FabButton id={`edit-${id}`} icon="mode_edit"
+    <FabButton onClick={onEditClick} id={`edit-${id}`} icon="mode_edit"
       tooltip="Edit Todo" />
     <FabButton onClick={onDeleteClick} id={`delete-${id}`} icon="delete_forever"
       tooltip="Delete Todo" />
@@ -79,6 +79,10 @@ class TodoList extends Component {
   _handleDeleteClick(id) {
     request.delete(`${TODO_API}/${id}`)
     .end((err, res) => this.dispatch(removeTodo(id)))
+  }
+
+  _handleEditClick(id) {
+    this.dispatch(editTodo(id))
   }
 
   static getVisibileTodos(todos, filter) {
