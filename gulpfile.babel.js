@@ -38,6 +38,7 @@ import gulpLoadPlugins from 'gulp-load-plugins'
 import source from 'vinyl-source-stream'
 import buffer from 'vinyl-buffer'
 import {output as pagespeed} from 'psi'
+import historyApiFallback from 'connect-history-api-fallback'
 import pkg from './package.json'
 
 const $ = gulpLoadPlugins();
@@ -112,6 +113,7 @@ gulp.task('styles', () => {
 // `.babelrc` file.
 
 const b = browserify({
+  debug: true,
   entries: ['./app/scripts/index.js'],
   cache: {},
   packageCache: {},
@@ -130,7 +132,7 @@ gulp.task('scripts', () => {
   .pipe($.sourcemaps.init({loadMaps: true}))
   .pipe($.sourcemaps.write())
   .pipe(gulp.dest('.tmp/scripts'))
-  .pipe($.concat('build.min.js'))
+  //.pipe($.concat('build.min.js'))
   .pipe($.uglify({preserveComments: 'some'}))
   // Output files
   .pipe($.size({title: 'scripts'}))
@@ -187,7 +189,10 @@ gulp.task('serve', ['scripts', 'styles'], () => {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app'],
+    server: {
+      baseDir: ['.tmp', 'app'],
+      middleware: [historyApiFallback()]
+    },
     port: 8000
   });
 
