@@ -5,7 +5,7 @@ import {fetchTodos} from '../../actions'
 import store from '../../store'
 import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
-import {toggleTodo, removeTodo, editTodo} from '../../actions'
+import {toggleTodo, removeTodo, editTodo, cancelEdit} from '../../actions'
 import {connect} from 'react-redux'
 
 
@@ -24,6 +24,43 @@ class FabButton extends Component {
       </div>
     )
   }
+}
+
+
+let EditTodo = ({ id, text, completed, dispatch }) => {
+  let input
+
+  return (
+    <form onSubmit={e => {
+      e.preventDefault()
+      if (!input.value.trim()) {
+        return
+      }
+      input.value = ''
+    }}>
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--2-col mdl-cell--4-offset">
+          <FloatingLabelTextBox textRef={node => { input = node }}
+            defaultValue={text} label="Todo" />
+        </div>
+        <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
+          <button
+            className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+            type="submit">
+            Add
+          </button>
+        </div>
+        <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
+          <button
+            className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+            onClick={(evt) => dispatch(cancelEdit(id))}
+            type="reset">
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  )
 }
 
 
