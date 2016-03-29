@@ -20,27 +20,30 @@ let AddTodo = ({ dispatch }) => {
   let input
 
   return (
-    <div>
-      <form onSubmit={e => {
-        e.preventDefault()
-        if (!input.value.trim()) {
-          return
-        }
-        postTodo(dispatch, input.value)
-        input.value = ''
-      }}>
-        <input ref={node => {
-          input = node
-        }} />
-        <button
-          className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
-          type="submit">
-          Add Todo
-        </button>
-      </form>
-    </div>
+    <form onSubmit={e => {
+      e.preventDefault()
+      if (!input.value.trim()) {
+        return
+      }
+      postTodo(dispatch, input.value)
+      input.value = ''
+    }}>
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--2-col mdl-cell--4-offset">
+          <input ref={node => { input = node }} />
+        </div>
+        <div className="mdl-cell mdl-cell--2-col">
+          <button
+            className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+            type="submit">
+            Add Todo
+          </button>
+        </div>
+      </div>
+    </form>
   )
 }
+
 AddTodo = connect()(AddTodo)
 
 export default AddTodo

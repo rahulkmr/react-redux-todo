@@ -10,12 +10,31 @@ import {connect} from 'react-redux'
 
 
 const Todo = ({onClick, completed, text}) => (
-  <li className="mdl-list__item" onClick={onClick}
-    style={{textDecoration: completed ? 'line-through' : 'none'}}>
-    <span className="mdl-list__item_primary_content">
-      {text}
-    </span>
-  </li>
+  <div className="mdl-grid">
+    <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
+      <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
+        {text}
+      </span>
+    </div>
+    <div className="mdl-cell mdl-cell--1-col" onClick={onClick}>
+      <button className="mdl-button mdl-js-button mdl-button--fab
+        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
+        <i className="material-icons">check_circle</i>
+      </button>
+    </div>
+    <div className="mdl-cell mdl-cell--1-col">
+      <button className="mdl-button mdl-js-button mdl-button--fab
+        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
+        <i className="material-icons">mode_edit</i>
+      </button>
+    </div>
+    <div className="mdl-cell mdl-cell--1-col">
+      <button className="mdl-button mdl-js-button mdl-button--fab
+        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
+        <i className="material-icons">delete_forever</i>
+      </button>
+    </div>
+  </div>
 )
 
 Todo.propTypes = {
@@ -34,14 +53,13 @@ class TodoList extends Component {
 
   render() {
     return (
-      <ul className="mdl-list">
+      <div>
         {this.props.todos.map(todo =>
         <Todo
           key={todo.id}
           {...todo}
-          onClick={() => this._handleClick(todo.id)}
-        />)}
-        </ul>
+          onClick={() => this._handleClick(todo.id)} />)}
+      </div>
     )
   }
 
