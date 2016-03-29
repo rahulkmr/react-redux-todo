@@ -5,7 +5,7 @@ import {fetchTodos} from '../../actions'
 import store from '../../store'
 import {SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE, TODO_API} from '../../constants'
 import $ from 'jquery'
-import {toggleTodo, removeTodo, editTodo, cancelEdit} from '../../actions'
+import {updateTodo, removeTodo, editTodo, cancelEdit} from '../../actions'
 import {connect} from 'react-redux'
 import { FloatingLabelTextBox } from '../Common'
 
@@ -124,7 +124,7 @@ class TodoList extends Component {
     const data = {completed: completed}
     request.put(`${TODO_API}/${id}`)
     .send(data)
-    .end((err, res) => this.dispatch(toggleTodo(id)))
+    .end((err, res) => this.dispatch(updateTodo(res.body.id, res.body.text, res.body.completed)))
   }
 
   _handleDeleteClick(id) {

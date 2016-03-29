@@ -4,11 +4,11 @@ import {TODO_API} from '../constants'
 
 export const ADD_TODO = 'ADD_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
-export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const INITIALIZE = 'INITIALIZE'
 export const EDIT_TODO = 'EDIT_TODO'
-export const CANCEL_TODO = 'CANCEL_TODO'
+export const CANCEL_EDIT = 'CANCEL_EDIT'
+export const UPDATE_TODO = 'UPDATE_TODO'
 
 
 export const fetchTodos = (dispatch) => {
@@ -43,14 +43,6 @@ export const setVisibilityFilter = (filter) => {
 }
 
 
-export const toggleTodo = (id) => {
-  return {
-    type: TOGGLE_TODO,
-    id
-  }
-}
-
-
 export const removeTodo = (id) => {
   return {
     type: REMOVE_TODO,
@@ -69,7 +61,16 @@ export const editTodo = (id) => {
 
 export const cancelEdit = (id) => {
   return {
-    type: CANCEL_TODO,
+    type: CANCEL_EDIT,
     id
+  }
+}
+
+
+export const updateTodo = (id, text, completed) => {
+  return {
+    type: UPDATE_TODO,
+    text,
+    completed
   }
 }
