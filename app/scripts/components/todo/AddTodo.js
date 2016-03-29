@@ -52,7 +52,7 @@ let AddTodo = ({ dispatch }) => {
           <FloatingLabelTextBox ref={node => { input = node }}
             label="Todo" />
         </div>
-        <div className="mdl-cell mdl-cell--2-col" style={{"margin-top": "2%"}}>
+        <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
           <button
             className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
             type="submit">
