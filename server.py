@@ -44,7 +44,7 @@ def todos_show(todo_id):
 def todos_delete(todo_id):
     with open('todos.json', 'r') as db:
         todos = json.loads(db.read())
-    todos = filter(lambda x: x['id'] == int(todo_id), todos)
+    todos = filter(lambda x: x['id'] != int(todo_id), todos)
     with open('todos.json', 'w') as db:
         db.write(json.dumps(todos, indent=4, separators=(',', ': ')))
     return make_response('', httplib.NO_CONTENT)
