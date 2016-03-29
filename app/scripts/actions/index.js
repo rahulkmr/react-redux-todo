@@ -5,6 +5,7 @@ import {TODO_API} from '../constants'
 export const ADD_TODO = 'ADD_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
+export const REMOVE_TODO = 'REMOVE_TODO'
 export const INITIALIZE = 'INITIALIZE'
 
 
@@ -43,6 +44,14 @@ export const setVisibilityFilter = (filter) => {
 export const toggleTodo = (id) => {
   return {
     type: TOGGLE_TODO,
+    id
+  }
+}
+
+
+export const removeTodo = (id) => {
+  return {
+    type: REMOVE_TODO,
     id
   }
 }
