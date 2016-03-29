@@ -65,7 +65,8 @@ class TodoList extends Component {
         <Todo
           key={todo.id}
           {...todo}
-          onCheckClick={() => this._handleClick(todo.id)} />)}
+          onCheckClick={() => this._handleCheckClick(todo.id)}
+          onDeleteClick={() => this._handleDeleteClick(todo.id)} />)}
       </div>
     )
   }
