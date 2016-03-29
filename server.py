@@ -57,7 +57,8 @@ def todos_update(todo_id):
     newTodos = []
     for todo in todos:
         if todo['id'] == int(todo_id):
-            todo['completed'] = not todo['completed']
+            todo['completed'] = request.json.get('completed') or todo['completed']
+            todo['text'] = request.json.get('text') or todo['text']
             res = todo
         newTodos.append(todo)
     with open('todos.json', 'w') as db:
