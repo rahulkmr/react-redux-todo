@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { Component } from 'react'
 import request from 'superagent'
 import { connect } from 'react-redux'
 import { addTodo } from '../../actions'
@@ -16,6 +16,25 @@ const postTodo = (dispatch, text) => {
 }
 
 
+class FloatingLabelTextBox extends Component {
+  render() {
+    return (
+      <div className={this.props.containerClass} id={this.props.containerId}>
+        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input className="mdl-textfield__input" type="text" pattern={this.props.pattern}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            ref={this.props.ref}
+            id={this.props.id} value={this.props.value} />
+          <label className="mdl-textfield__label" htmlFor={this.props.id}>{this.props.label}</label>
+          <span className="mdl-textfield__error">{this.props.errorMessage}</span>
+        </div>
+      </div>
+    )
+  }
+}
+
+
 let AddTodo = ({ dispatch }) => {
   let input
 
@@ -30,13 +49,14 @@ let AddTodo = ({ dispatch }) => {
     }}>
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--2-col mdl-cell--4-offset">
-          <input ref={node => { input = node }} />
+          <FloatingLabelTextBox ref={node => { input = node }}
+            label="Todo" />
         </div>
-        <div className="mdl-cell mdl-cell--2-col">
+        <div className="mdl-cell mdl-cell--2-col" style={{"margin-top": "2%"}}>
           <button
             className="mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--colored"
             type="submit">
-            Add Todo
+            Add
           </button>
         </div>
       </div>
