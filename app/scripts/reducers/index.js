@@ -21,7 +21,7 @@ const todos = (state = [], action) => {
           return state.map(t => {
             if (t.id !== action.id)
               return t
-            return {...t, completed: action.completed, text: action.text}
+            return {...t, edit: false, completed: action.completed, text: action.text}
           })
       case REMOVE_TODO:
           return state.filter(t => t.id !== action.id)
