@@ -21,7 +21,7 @@ def todos_index():
 def todos_create():
     with open('todos.json', 'r') as db:
         todos = json.loads(db.read())
-    newTodo = request.form.to_dict()
+    newTodo = request.json
     newTodo['completed'] = False
     newTodo['id'] = int(time.time() * 1000)
 
