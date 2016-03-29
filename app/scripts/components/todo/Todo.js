@@ -37,7 +37,11 @@ let EditTodo = ({ id, text, completed, dispatch }) => {
       if (!input.value.trim()) {
         return
       }
-      input.value = ''
+      request.put(`${TODO_API}/${id}`)
+      .send({text: input.value.trim()})
+      .end((err, res) => {
+        dispatch(updateTodo(res.body.id, res.body.text, res.body.completed))
+      })
     }}>
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--4-col mdl-cell--3-offset">
@@ -124,7 +128,9 @@ class TodoList extends Component {
     const data = {completed: completed}
     request.put(`${TODO_API}/${id}`)
     .send(data)
-    .end((err, res) => this.dispatch(updateTodo(res.body.id, res.body.text, res.body.completed)))
+    .end((err, res) => {
+      this.dispatch(updateTodo(res.body.id, res.body.text, res.body.completed))
+    })
   }
 
   _handleDeleteClick(id) {
