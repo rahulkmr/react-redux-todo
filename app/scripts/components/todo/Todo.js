@@ -9,33 +9,40 @@ import {toggleTodo} from '../../actions'
 import {connect} from 'react-redux'
 
 
-const Todo = ({onClick, completed, text}) => (
+class FabButton extends Component {
+  render() {
+    return (
+      <div className="mdl-cell mdl-cell--1-col">
+        <button className="mdl-button mdl-js-button mdl-button--fab
+          mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab"
+          id={this.props.id} onClick={this.props.onClick}>
+          <i className="material-icons">{this.props.icon}</i>
+        </button>
+        <div className="mdl-tooltip" htmlFor={this.props.id}>
+          {this.props.tooltip}
+        </div>
+      </div>
+    )
+  }
+}
+
+
+const Todo = ({onClick, id, completed, text}) => (
   <div className="mdl-grid">
     <div className="mdl-cell mdl-cell--3-offset mdl-cell--4-col">
       <span style={{textDecoration: completed ? 'line-through' : 'none'}}>
         {text}
       </span>
     </div>
-    <div className="mdl-cell mdl-cell--1-col" onClick={onClick}>
-      <button className="mdl-button mdl-js-button mdl-button--fab
-        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
-        <i className="material-icons">check_circle</i>
-      </button>
-    </div>
-    <div className="mdl-cell mdl-cell--1-col">
-      <button className="mdl-button mdl-js-button mdl-button--fab
-        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
-        <i className="material-icons">mode_edit</i>
-      </button>
-    </div>
-    <div className="mdl-cell mdl-cell--1-col">
-      <button className="mdl-button mdl-js-button mdl-button--fab
-        mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
-        <i className="material-icons">delete_forever</i>
-      </button>
-    </div>
+    <FabButton onClick={onClick} id={`check-${id}`} icon="check_circle"
+      tooltip="Toggle Complete Status" />
+    <FabButton id={`edit-${id}`} icon="mode_edit"
+      tooltip="Edit Todo" />
+    <FabButton id={`delete-${id}`} icon="delete_forever"
+      tooltip="Delete Todo" />
   </div>
 )
+
 
 Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
