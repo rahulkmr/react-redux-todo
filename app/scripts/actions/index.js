@@ -7,6 +7,8 @@ export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const INITIALIZE = 'INITIALIZE'
+export const EDIT_TODO = 'EDIT_TODO'
+export const CANCEL_TODO = 'CANCEL_TODO'
 
 
 export const fetchTodos = (dispatch) => {
@@ -52,6 +54,22 @@ export const toggleTodo = (id) => {
 export const removeTodo = (id) => {
   return {
     type: REMOVE_TODO,
+    id
+  }
+}
+
+
+export const editTodo = (id) => {
+  return {
+    type: EDIT_TODO,
+    id
+  }
+}
+
+
+export const cancelTodo = (id) => {
+  return {
+    type: CANCEL_TODO,
     id
   }
 }
