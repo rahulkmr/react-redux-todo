@@ -24,7 +24,7 @@ class FloatingLabelTextBox extends Component {
           <input className="mdl-textfield__input" type="text" pattern={this.props.pattern}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
-            ref={this.props.ref}
+            ref={this.props.textRef}
             id={this.props.id} value={this.props.value} />
           <label className="mdl-textfield__label" htmlFor={this.props.id}>{this.props.label}</label>
           <span className="mdl-textfield__error">{this.props.errorMessage}</span>
@@ -49,7 +49,7 @@ let AddTodo = ({ dispatch }) => {
     }}>
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--2-col mdl-cell--4-offset">
-          <FloatingLabelTextBox ref={node => { input = node }}
+          <FloatingLabelTextBox textRef={node => { input = node }}
             label="Todo" />
         </div>
         <div className="mdl-cell mdl-cell--2-col" style={{marginTop: "2%"}}>
